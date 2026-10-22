@@ -1,0 +1,51 @@
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.9rem;
+  margin-bottom: 0.9rem;
+}
+.metrics section {
+  display: grid;
+  gap: 0.45rem;
+  min-height: 116px;
+  align-content: center;
+  overflow: hidden;
+}
+.metrics section::after {
+  content: '';
+  position: absolute;
+  width: 95px;
+  height: 95px;
+  right: -42px;
+  bottom: -50px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+}
+.metrics section:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+.metrics span,
+.muted {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+.metrics strong {
+  font-size: 1.45rem;
+  letter-spacing: -0.04em;
+}
+.good {
+  color: var(--success);
+}
+h2 {
+  font-size: 1rem;
+  margin: 0;
+}
+.muted {
+  margin: 0.3rem 0 1.2rem;
+}
+@media (max-width: 650px) {
+  .metrics {
+    grid-template-columns: 1fr;
+  }
+}

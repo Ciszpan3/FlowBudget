@@ -1,0 +1,154 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AccountType {
+  BANK
+  CASH
+  SAVINGS
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+  TRANSFER_IN
+  TRANSFER_OUT
+}
+
+enum ImportStatus {
+  PREVIEW
+  COMMITTED
+  FAILED
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  sessions  Session[]
+  accounts  Account[]
+  categories Category[]
+  transactions Transaction[]
+  budgets Budget[]
+  importBatches ImportBatch[]
+  rules CategorizationRule[]
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  csrfToken String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model Account {
+  id             String      @id @default(cuid())
+  userId         String
+  name           String
+  type           AccountType
+  currency       String      @default("PLN") @db.Char(3)
+  openingBalance Decimal     @db.Decimal(19, 2)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  archivedAt     DateTime?
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+  @@index([userId, archivedAt])
+  @@unique([userId, name])
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  color     String
+  icon      String
+  isIncome  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+  budgets Budget[]
+  rules CategorizationRule[]
+  @@unique([userId, name, isIncome])
+  @@index([userId])
+}
+
+model Transaction {
+  id              String          @id @default(cuid())
+  userId          String
+  accountId       String
+  categoryId      String?
+  type            TransactionType
+  amount          Decimal         @db.Decimal(19, 2)
+  description     String
+  bookedAt        DateTime        @db.Date
+  transferGroupId String?
+  importBatchId   String?
+  fingerprint     String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  account Account @relation(fields: [accountId], references: [id], onDelete: Restrict)
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  importBatch ImportBatch? @relation(fields: [importBatchId], references: [id], onDelete: SetNull)
+  @@index([userId, bookedAt(sort: Desc)])
+  @@index([accountId, bookedAt])
+  @@index([userId, categoryId, bookedAt])
+  @@index([transferGroupId])
+  @@unique([userId, fingerprint])
+}
+
+model Budget {
+  id         String   @id @default(cuid())
+  userId     String
+  categoryId String
+  month      DateTime @db.Date
+  limit      Decimal  @db.Decimal(19, 2)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  @@unique([userId, categoryId, month])
+  @@index([userId, month])
+}
+
+model ImportBatch {
+  id            String       @id @default(cuid())
+  userId        String
+  accountId     String
+  filename      String
+  status        ImportStatus @default(PREVIEW)
+  importedCount Int          @default(0)
+  skippedCount  Int          @default(0)
+  errorCount    Int          @default(0)
+  createdAt     DateTime     @default(now())
+  committedAt   DateTime?
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+  @@index([userId, createdAt(sort: Desc)])
+}
+
+model CategorizationRule {
+  id         String   @id @default(cuid())
+  userId     String
+  phrase     String
+  categoryId String
+  priority   Int      @default(100)
+  createdAt  DateTime @default(now())
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  @@unique([userId, phrase])
+  @@index([userId, priority])
+}

@@ -1,0 +1,214 @@
+.kicker {
+  color: var(--accent-deep) !important;
+  font-size: 0.68rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 800;
+}
+.summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-bottom: 0.9rem;
+}
+.metric {
+  min-height: 126px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.72rem;
+  align-items: center;
+  overflow: hidden;
+}
+.metric::after {
+  content: '';
+  position: absolute;
+  right: -25px;
+  bottom: -45px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  filter: blur(2px);
+  transition: transform 0.35s var(--ease);
+}
+.metric:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+.metric:hover::after {
+  transform: scale(1.16);
+}
+.metricIcon {
+  grid-row: 1/3;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(109, 141, 255, 0.15);
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
+.metric span {
+  font-size: 0.7rem;
+  color: var(--muted);
+  position: relative;
+  z-index: 1;
+}
+.metric strong {
+  font-size: clamp(1.08rem, 1.5vw, 1.35rem);
+  letter-spacing: -0.035em;
+  position: relative;
+  z-index: 1;
+}
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(300px, 0.75fr);
+  gap: 0.9rem;
+}
+.chart {
+  min-width: 0;
+  min-height: 360px;
+}
+.cardHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 0.8rem;
+}
+.cardHead span {
+  font-size: 0.62rem;
+  color: var(--accent-deep);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 750;
+}
+.cardHead h2 {
+  font-size: 1rem;
+  margin: 0.2rem 0;
+  letter-spacing: -0.02em;
+}
+.cardHead small {
+  border: 1px solid var(--border-soft);
+  background: var(--surface-2);
+  padding: 0.32rem 0.55rem;
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 0.68rem;
+}
+.categories {
+  grid-row: span 2;
+}
+.categories ul {
+  padding: 0;
+  margin: 0.25rem 0 0;
+  list-style: none;
+  display: grid;
+  gap: 0.25rem;
+}
+.categories li {
+  display: grid;
+  grid-template-columns: 8px 1fr auto;
+  gap: 0.62rem;
+  align-items: center;
+  padding: 0.52rem 0.35rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  transition: background 0.2s;
+}
+.categories li:hover {
+  background: var(--surface-2);
+}
+.categories i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px currentColor;
+}
+.categories b {
+  font-size: 0.74rem;
+}
+.recent {
+  min-width: 0;
+}
+.txList {
+  display: grid;
+}
+.txList > div {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.8rem;
+  align-items: center;
+  padding: 0.72rem 0.25rem;
+  border-top: 1px solid var(--border-soft);
+  border-radius: 8px;
+  transition:
+    background 0.2s,
+    padding 0.2s;
+}
+.txList > div:hover {
+  background: var(--surface-2);
+  padding-inline: 0.55rem;
+}
+.txList i {
+  width: 35px;
+  height: 35px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-style: normal;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+.txList span {
+  display: grid;
+  min-width: 0;
+}
+.txList b {
+  font-size: 0.8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.txList small {
+  font-size: 0.66rem;
+  color: var(--muted);
+}
+.txList strong {
+  font-size: 0.8rem;
+}
+.positive {
+  color: var(--success);
+}
+.muted {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+@media (max-width: 1180px) {
+  .summary {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .categories {
+    grid-row: auto;
+  }
+}
+@media (max-width: 520px) {
+  .summary {
+    grid-template-columns: 1fr;
+  }
+  .metric {
+    min-height: 104px;
+  }
+  .txList > div {
+    grid-template-columns: auto 1fr;
+  }
+  .txList > div > strong {
+    grid-column: 2;
+  }
+}

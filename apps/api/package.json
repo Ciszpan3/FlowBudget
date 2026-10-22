@@ -1,0 +1,41 @@
+{
+  "name": "@flowbudget/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run src",
+    "prisma": "prisma",
+    "db:seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@flowbudget/shared": "workspace:*",
+    "@node-rs/argon2": "2.0.2",
+    "@prisma/client": "6.19.3",
+    "cookie-parser": "1.4.7",
+    "cors": "2.8.5",
+    "csv-parse": "7.0.2",
+    "express": "5.3.0",
+    "express-rate-limit": "8.7.1",
+    "helmet": "8.1.0",
+    "iconv-lite": "0.7.0",
+    "multer": "2.5.0",
+    "zod": "4.1.12"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "1.4.9",
+    "@types/cors": "2.8.19",
+    "@types/express": "5.0.3",
+    "@types/multer": "2.0.0",
+    "@types/node": "24.10.0",
+    "@types/supertest": "6.0.3",
+    "prisma": "6.19.3",
+    "supertest": "7.1.4",
+    "tsx": "4.20.6",
+    "vitest": "5.0.5"
+  }
+}

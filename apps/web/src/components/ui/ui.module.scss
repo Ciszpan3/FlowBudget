@@ -1,0 +1,190 @@
+.button {
+  min-height: 42px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 0.66rem 1rem;
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.2s var(--ease),
+    background 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+.button:focus-visible,
+.input:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  outline-offset: 2px;
+}
+.primary {
+  background: linear-gradient(135deg, var(--accent-strong), var(--accent));
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(109, 141, 255, 0.2);
+}
+.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(109, 141, 255, 0.3);
+}
+.secondary {
+  background: var(--surface-2);
+  color: var(--text);
+  border-color: var(--border);
+}
+.secondary:hover {
+  background: var(--surface-3);
+  border-color: color-mix(in srgb, var(--accent) 32%, var(--border));
+}
+.ghost {
+  background: transparent;
+  color: var(--muted);
+}
+.ghost:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+.danger {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border-color: color-mix(in srgb, var(--danger) 20%, transparent);
+}
+.input {
+  width: 100%;
+  min-height: 43px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-2) 66%, transparent);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 0.8rem;
+  font: inherit;
+  font-size: 0.86rem;
+  transition:
+    border-color 0.2s,
+    background 0.2s,
+    box-shadow 0.2s;
+}
+.input:hover {
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+}
+.input:focus {
+  border-color: var(--accent);
+  background: var(--surface-1);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+  outline: 0;
+}
+.input::placeholder {
+  color: color-mix(in srgb, var(--muted) 70%, transparent);
+}
+.field {
+  display: grid;
+  gap: 0.42rem;
+  font-size: 0.76rem;
+  font-weight: 650;
+  color: var(--muted-strong);
+}
+.field small {
+  color: var(--danger);
+}
+.card {
+  position: relative;
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--surface-1) 96%, white 4%),
+    var(--surface-1)
+  );
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.25rem;
+  transition:
+    border-color 0.25s,
+    transform 0.25s var(--ease),
+    box-shadow 0.25s;
+}
+.card:hover {
+  border-color: color-mix(in srgb, var(--accent) 17%, var(--border-soft));
+}
+.empty {
+  text-align: center;
+  padding: 3.4rem 1.5rem;
+  color: var(--muted);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--surface-1) 60%, transparent);
+}
+.empty span {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin: 0 auto;
+  border-radius: 16px;
+  background: var(--accent-soft);
+  font-size: 1.6rem;
+  color: var(--accent);
+}
+.empty h3 {
+  color: var(--text);
+  margin: 0.9rem 0 0.25rem;
+  font-size: 1rem;
+}
+.empty p {
+  margin: 0;
+  font-size: 0.82rem;
+}
+.spinner {
+  width: 1.35rem;
+  height: 1.35rem;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+.skeletonGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.skeleton {
+  height: 168px;
+  overflow: hidden;
+  background: var(--surface-1);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+}
+.skeleton::after {
+  content: '';
+  display: block;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.055), transparent);
+  animation: shimmer 1.35s infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes shimmer {
+  from {
+    transform: translateX(-110%);
+  }
+  to {
+    transform: translateX(260%);
+  }
+}
+@media (max-width: 700px) {
+  .skeletonGrid {
+    grid-template-columns: 1fr;
+  }
+}
